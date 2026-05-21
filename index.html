@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Coffee | Specialty Roasters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap&subset=cyrillic,latin-ext" rel="stylesheet">
+    <style>
+        :root { 
+            --bg-cream: #FDFBF7; 
+            --dark-coffee: #2D2A26; 
+            --accent-latte: #D4A373; 
+            --white: #ffffff; 
+            --transition: all 0.3s ease;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { background-color: var(--bg-cream); color: var(--dark-coffee); font-family: 'Montserrat', sans-serif; line-height: 1.6; scroll-behavior: smooth; }
+
+        /* HEADER & MEGA MENU */
+        header { padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(253, 251, 247, 0.98); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); flex-wrap: wrap; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--dark-coffee); text-decoration: none; letter-spacing: 1px; }
+        
+        /* HAMBURGER MENU ICON (Gizli, sadece mobilde зikacak) */
+        .hamburger { display: none; font-size: 28px; cursor: pointer; color: var(--dark-coffee); user-select: none; }
+
+        .nav-container { display: flex; align-items: center; gap: 35px; transition: var(--transition); }
+        .dropdown-trigger { position: relative; cursor: pointer; text-transform: uppercase; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; transition: var(--transition); }
+        .dropdown-trigger:hover { color: var(--accent-latte); }
+
+        .dropdown { position: absolute; top: 150%; left: 50%; transform: translateX(-50%); background: var(--white); padding: 15px 20px; width: max-content; min-width: 150px; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 8px; border-top: 3px solid var(--accent-latte); opacity: 0; transition: opacity 0.3s ease, top 0.3s ease; }
+        .dropdown-trigger:hover .dropdown { display: block; opacity: 1; top: 120%; }
+        .dropdown a { display: block; padding: 10px 0; color: var(--dark-coffee); text-decoration: none; font-size: 14px; transition: var(--transition); border-bottom: 1px solid #f0f0f0; cursor: pointer;}
+        .dropdown a:last-child { border-bottom: none; }
+        .dropdown a:hover { color: var(--accent-latte); padding-left: 5px; }
+
+        .lang-select { background: transparent; border: 1px solid #e0dcd5; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; outline: none; transition: var(--transition); }
+        .lang-select:hover { border-color: var(--accent-latte); }
+
+        /* HERO */
+        .hero { padding: 180px 50px; text-align: center; background: linear-gradient(rgba(45, 42, 38, 0.5), rgba(45, 42, 38, 0.7)), url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=1600') center/cover no-repeat; color: var(--white); }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 5rem; margin-bottom: 20px; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 30px; font-weight: 300; }
+        .hero-btn { background: var(--accent-latte); color: var(--white); padding: 15px 40px; text-decoration: none; text-transform: uppercase; font-weight: 600; letter-spacing: 2px; border-radius: 30px; transition: var(--transition); display: inline-block; }
+        .hero-btn:hover { background: var(--white); color: var(--dark-coffee); }
+
+        /* PRODUCTS GRID */
+        .products-section { padding: 80px 50px; background: var(--bg-cream); min-height: 500px; }
+        .section-title { text-align: center; font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 50px; }
+        .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        
+        .card { background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.03); transition: var(--transition); display: flex; flex-direction: column; }
+        .card.hidden { display: none; } 
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; transition: var(--transition); }
+        .card:hover img { filter: brightness(0.95); }
+        .card h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 5px; }
+        .price { font-weight: 600; color: var(--accent-latte); font-size: 1.1rem; display: block; margin-bottom: 20px; }
+        .btn-buy { background: var(--dark-coffee); color: var(--white); border: 2px solid var(--dark-coffee); padding: 12px 20px; width: 100%; border-radius: 6px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 12px; transition: var(--transition); margin-top: auto; }
+        .btn-buy:hover { background: transparent; color: var(--dark-coffee); }
+
+        /* INSTA & FOOTER */
+        .insta-section { padding: 80px 50px; background: #f4f1eb; text-align: center; }
+        .insta-section h2 { font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 40px; }
+        .insta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .insta-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; transition: var(--transition); cursor: pointer; }
+        .insta-grid img:hover { transform: scale(1.03); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        footer { padding: 80px 50px; background: var(--dark-coffee); color: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 100%; }
+        .footer-info h3 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 20px; color: var(--accent-latte); }
+        .footer-info p { margin-bottom: 10px; font-weight: 300; opacity: 0.9; }
+        .map-box { width: 100%; height: 300px; background: #3d3a36; border-radius: 12px; overflow: hidden; }
+        .map-box iframe { width: 100%; height: 100%; border: none; }
+
+
+        /* --- RESPONSIVE DESIGN (TABLET VE MOBIL UYUMLULUK KODLARI) --- */
+        
+        /* TABLET (992px ve alti) */
+        @media (max-width: 992px) {
+            header { padding: 20px 30px; }
+            .hero { padding: 140px 30px; }
+            .hero h1 { font-size: 4rem; }
+            .products-section, .insta-section, footer { padding: 60px 30px; }
+            footer { grid-template-columns: 1fr; text-align: center; }
+            .insta-grid { grid-template-columns: repeat(2, 1fr); }
+            .products { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        }
+
+        /* MOBIL TELEFONLAR (768px ve alti) */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .hamburger { display: block; } /* Menь ikonunu gцster */
+            
+            /* Menьyь mobilde alt alta diz ve baslangiзta gizle */
+            .nav-container { 
+                display: none; 
+                width: 100%; 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 20px; 
+                padding-top: 20px;
+                border-top: 1px solid #e0dcd5;
+                margin-top: 15px;
+            }
+            
+            /* JS ile tetiklenecek class */
+            .nav-container.active { display: flex; } 
+
+            .dropdown-trigger { width: 100%; text-align: center; }
+            .dropdown { position: static; transform: none; box-shadow: none; border: none; display: none; width: 100%; text-align: center; background: transparent; padding: 10px 0 0 0; }
+            .dropdown-trigger:hover .dropdown { display: block; }
+            .dropdown a { border-bottom: none; padding: 8px 0; }
+
+            .hero { padding: 100px 20px; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero p { font-size: 1rem; }
+            
+            .products-section, .insta-section, footer { padding: 50px 20px; }
+            .section-title { font-size: 28px; }
+            
+            .products { grid-template-columns: 1fr; gap: 25px; } /* Mobilde ьrьnler tek kolon */
+            .insta-grid { gap: 15px; }
+            .map-box { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">AURA.</a>
+        <div class="hamburger" id="hamburgerMenu">?</div>
+        
+        <div class="nav-container" id="navContainer">
+            <div class="dropdown-trigger"><span data-i18n="nav_shop">SHOP</span>
+                <div class="dropdown">
+                    <a href="#menu" class="filter-btn" data-filter="espresso" data-i18n="cat_espresso">Espresso</a>
+                    <a href="#menu" class="filter-btn" data-filter="signature" data-i18n="cat_signature">Signature</a>
+                    <a href="#menu" class="filter-btn" data-filter="all" data-i18n="cat_all">All</a>
+                </div>
+            </div>
+            <div class="dropdown-trigger"><span data-i18n="nav_bestsellers">BEST SELLERS</span>
+                <div class="dropdown">
+                    <a href="#menu" class="filter-btn" data-filter="top-rated" data-i18n="cat_toprated">Top Rated</a>
+                    <a href="#menu" class="filter-btn" data-filter="cold" data-i18n="cat_cold">Cold Drinks</a>
+                </div>
+            </div>
+            <a href="#story" class="dropdown-trigger" style="text-decoration:none; color:var(--dark-coffee);"><span data-i18n="nav_story">STORY</span></a>
+            <select class="lang-select" id="languageSelector">
+                <option value="en">US / EN</option>
+                <option value="tr">TR</option>
+                <option value="tk">TKM</option>
+                <option value="ru">RU</option>
+            </select>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 data-i18n="hero_title">Crafted for the perfectionist.</h1>
+        <p data-i18n="hero_desc">Experience the next generation coffee with carefully selected beans from around the world.</p>
+        <a href="#menu" class="hero-btn" data-i18n="hero_btn">Shop Collection</a>
+    </section>
+
+    <section class="products-section" id="menu">
+        <h2 class="section-title" data-i18n="section_title">Our Signatures</h2>
+        <div class="products" id="productGrid">
+            <div class="card" data-category="signature cold"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500" alt="Espresso Tonic"><h3>Espresso Tonic</h3><span class="price">$6.50</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+            <div class="card" data-category="signature top-rated"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500" alt="Velvet Latte"><h3>Velvet Latte</h3><span class="price">$5.50</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+            <div class="card" data-category="espresso top-rated cold"><img src="https://images.unsplash.com/photo-1517701160207-657788478438?w=500" alt="Cold Brew"><h3>Cold Brew</h3><span class="price">$7.00</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+            <div class="card" data-category="signature top-rated"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500" alt="Dark Mocha"><h3>Dark Mocha</h3><span class="price">$5.80</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+            <div class="card" data-category="signature"><img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500" alt="Matcha Latte"><h3>Matcha Latte</h3><span class="price">$6.00</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+            <div class="card" data-category="espresso top-rated"><img src="https://images.unsplash.com/photo-1514432324607-a09d6b4a7068?w=500" alt="Single Origin"><h3>Single Origin</h3><span class="price">$8.00</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+            <div class="card" data-category="espresso"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500" alt="Flat White"><h3>Flat White</h3><span class="price">$5.20</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+            <div class="card" data-category="espresso"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500" alt="Americano"><h3>Americano</h3><span class="price">$4.50</span><button class="btn-buy" data-i18n="btn_buy">Add to Cart</button></div>
+        </div>
+    </section>
+
+    <section class="insta-section" id="story">
+        <h2><span data-i18n="follow">Follow our journey</span> <span style="color: var(--accent-latte);">@AuraCoffee</span></h2>
+        <div class="insta-grid">
+            <img src="https://images.unsplash.com/photo-1512568400610-62da217a8186?w=400" alt="Coffee art">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400" alt="Coffee beans">
+            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400" alt="Barista pouring coffee">
+            <img src="https://images.unsplash.com/photo-1542181999-5287f340866e?w=400" alt="Cozy cafe interior">
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <h3 data-i18n="visit">Visit Us</h3>
+            <p>123 Coffee Lane, Artisan District</p>
+            <p>Monday - Friday: 7am - 8pm</p>
+            <p>Weekend: 8am - 9pm</p>
+            <p style="margin-top: 20px; color: var(--accent-latte);">hello@auracoffee.com</p>
+        </div>
+        <div class="map-box">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c1191%3A0x49f75d3281df052a!2s150%20Park%20Row%2C%20New%20York%2C%20NY%2010007%2C%20USA!5e0!3m2!1sen!2str!4v1689801452601!5m2!1sen!2str" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </footer>
+
+    <script>
+        // --- HAMBURGER MENU SISTEMI (Mobil) ---
+        const hamburgerBtn = document.getElementById('hamburgerMenu');
+        const navContainerEl = document.getElementById('navContainer');
+        
+        hamburgerBtn.addEventListener('click', () => {
+            // Tiklandiginda 'active' sinifini ekler/зikarir (CSS'de display:flex yapar)
+            navContainerEl.classList.toggle('active');
+        });
+
+        // --- DIL SEЗIMI SISTEMI (i18n) ---
+        const translations = {
+            en: {
+                nav_shop: "SHOP", nav_bestsellers: "BEST SELLERS", nav_story: "STORY",
+                cat_espresso: "Espresso", cat_signature: "Signature", cat_all: "All",
+                cat_toprated: "Top Rated", cat_cold: "Cold Drinks",
+                hero_title: "Crafted for the perfectionist.",
+                hero_desc: "Experience the next generation coffee with carefully selected beans from around the world.",
+                hero_btn: "Shop Collection", section_title: "Our Signatures",
+                btn_buy: "Add to Cart", follow: "Follow our journey", visit: "Visit Us"
+            },
+            tr: {
+                nav_shop: "MAGAZA", nav_bestsellers: "ЗOK SATANLAR", nav_story: "HIKAYE",
+                cat_espresso: "Espresso", cat_signature: "Цzel Seriler", cat_all: "Tьmь",
+                cat_toprated: "En Iyiler", cat_cold: "Soguk Iзecekler",
+                hero_title: "Mьkemmeliyetзiler iзin tasarlandi.",
+                hero_desc: "Dьnyanin dцrt bir yanindan цzenle seзilmis зekirdeklerle yeni nesil kahve deneyimini yasayin.",
+                hero_btn: "Koleksiyonu Incele", section_title: "Цzel Lezzetlerimiz",
+                btn_buy: "Sepete Ekle", follow: "Bizi takip edin", visit: "Bizi Ziyaret Edin"
+            },
+            tk: {
+                nav_shop: "DЬKAN", nav_bestsellers: "IN KЦP SATYLANLAR", nav_story: "HEKAЭA",
+                cat_espresso: "Espresso", cat_signature: "Эцrite Tagamlar", cat_all: "Дhlisi",
+                cat_toprated: "In gowylar", cat_cold: "Sowuk iзgiler",
+                hero_title: "Kдmillesdirmegi sцээдnler ьзin.",
+                hero_desc: "Dьnэдnin dьrli kьnjeginden saэlanan dдnelik kofeler bilen tдze nesil kofe tejribesi.",
+                hero_btn: "Bцlьmleri Gцr", section_title: "Bizin Эцritelerimiz",
+                btn_buy: "Sebede gos", follow: "Bizi yzarlan", visit: "Bize Gelin"
+            },
+            ru: {
+                nav_shop: "???????", nav_bestsellers: "???? ??????", nav_story: "???????",
+                cat_espresso: "????????", cat_signature: "?????????", cat_all: "???",
+                cat_toprated: "??????", cat_cold: "????????",
+                hero_title: "??????? ??? ???????????????.",
+                hero_desc: "???????? ??? ???? ???? ?????? ????????? ?? ????????? ?????????? ????? ?? ????? ????.",
+                hero_btn: "? ???????", section_title: "???? ????????? ???????",
+                btn_buy: "? ???????", follow: "??????? ?? ????", visit: "???????? ???"
+            }
+        };
+
+        const langSelect = document.getElementById('languageSelector');
+        
+        langSelect.addEventListener('change', (e) => {
+            const lang = e.target.value;
+            const elements = document.querySelectorAll('[data-i18n]');
+            
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        });
+
+        // --- MENЬ FILTRELEME SISTEMI ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.card');
+        const sectionTitle = document.querySelector('.section-title');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const filterValue = e.target.getAttribute('data-filter');
+                
+                sectionTitle.textContent = e.target.textContent;
+
+                cards.forEach(card => {
+                    if (filterValue === 'all') {
+                        card.classList.remove('hidden');
+                    } else {
+                        if (card.getAttribute('data-category').includes(filterValue)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    }
+                });
+
+                // Mobilde kategori seзildikten sonra menьyь otomatik kapat
+                if(window.innerWidth <= 768) {
+                    navContainerEl.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

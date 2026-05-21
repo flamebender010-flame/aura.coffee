@@ -1,0 +1,17 @@
+{
+  "name": "Aura Coffee | Specialty Roasters",
+  "short_name": "Aura Coffee",
+  "description": "Experience the next generation coffee.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FDFBF7",
+  "theme_color": "#2D2A26",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
